@@ -5,7 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="JsonFileDataBase" Version="1.0.2" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="AnalyticLib">
+      <HintPath>..\..\AnalyticLib\AnalyticLib\bin\Debug\netstandard2.0\AnalyticLib.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

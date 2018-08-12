@@ -1,0 +1,20 @@
+﻿body,body>*{
+    margin:0;
+    padding:0;
+    display:inline-block;
+}
+
+.full-width{ width:100%;}
+.color-theme{background-color: #00c896;}
+.color-text-light{color:whitesmoke;}
+.bar {
+    fill: steelblue;
+}
+
+    .bar:hover {
+        fill: brown;
+    }
+
+.axis--x path {
+    display: none;
+}
