@@ -2,34 +2,41 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title></title>
+    <title>Analytica</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
     <link href="styles.css" rel="stylesheet" />
 </head>
-<body>
+
+<body ng-app="analyticaApp" ng-controller="analyticaCtrl">
+
     <header class="full-width color-theme color-text-light">
-        <h2>Analytica</h2>
+        <p>Analytica</p>
     </header>
 
-    <nav>
-        <form>
-            <label>Time</label>
-            <input type="month" name="month" value="" />
-            <label>All Time</label>
-            <input type="radio" name="filter" value="" default />
-            <label>Year Only</label>
-            <input type="radio" name="filter" value="" />
-            <label>Mont Only</label>
-            <input type="radio" name="filter" value="" />
-            <input type="submit" name="submit" value="Search" />
+    <nav class="padded">
+        <form ng-submit="getAll()">
+
+            <label>Select Time</label>
+            <input type="month" name="month" ng-model="selectedDate" value="" ng-change="updateRadios()" />
+          
+            <label>Filter By: </label>
+            <input type="radio" name="filter" ng-model="filter" value="{{dateToYearAndMonth}}" /><label>{{dateToMonth}} of {{dateToYear}}</label>
+
+            <input type="radio" name="filter" ng-model="filter" value="{{dateToYear}}" /><label>Year {{dateToYear}} only</label>
+
+            <input type="radio" name="filter" ng-model="filter" value="" /><label>All {{dateToMonth}} monthes</label>
+
+            <button type="submit" id="submit" value="Submit">Filter</button>
         </form>
     </nav>
 
     <section class="full-width ">
-        <svg width="960" height="500"></svg>
+        <svg id="svg1" width="1270" height="500"></svg>
         <div id="word-cloud"></div>
     </section>
     
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="bar.js"></script>
+    <script src="controller.js"></script>
 </body>
 </html>

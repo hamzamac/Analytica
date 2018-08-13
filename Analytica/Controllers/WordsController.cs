@@ -55,7 +55,7 @@ namespace Analytica.Controllers
             var wc = text.SplitText().WordCount()
                 .OrderByDescending(w => w.Value).Select(w => new WordStats() { Word = w.Key, Frequency = w.Value }).ToList();
 
-            return wc;
+            return wc.GetRange(0, 30);
         }
 
 
@@ -77,7 +77,7 @@ namespace Analytica.Controllers
                 .Select(w => new WordStats() { Word = w.Key, Frequency = w.Value })
                 .ToList();
 
-            return wc;
+            return wc.GetRange(0, 30);
         }
 
         [HttpGet("month/{month:int:range(1,12)}")]
@@ -98,12 +98,13 @@ namespace Analytica.Controllers
                 .Select(w => new WordStats() { Word = w.Key, Frequency = w.Value })
                 .ToList();
 
-            return wc;
+            return wc.GetRange(0, 30);
         }
 
         [HttpGet("year/{year:int:length(4)}/month/{month:int:range(1,12)}")]
         public ActionResult<List<WordStats>> GetByMonthInAYear(int year, int month)
         {
+          
             var news = _db.NewsEntity
                 .GetAll()
                 .ToList()
@@ -113,12 +114,14 @@ namespace Analytica.Controllers
 
             TextAnalyzer text = new TextAnalyzer(news);
 
-            var wc = text.SplitText().WordCount()
-                .OrderByDescending(w => w.Value).Select(w => new WordStats() { Word = w.Key, Frequency = w.Value }).ToList();
-            // .ToDictionary(w => w.Key, w => w.Value);
+            var wc = text.SplitText()
+                .WordCount()
+                .OrderByDescending(w => w.Value)
+                .Select(w => new WordStats() { Word = w.Key, Frequency = w.Value })
+                .ToList();
 
-            return wc;
+            return wc.GetRange(0, 30);
         }
-     
+      
     }
 }

@@ -7,14 +7,9 @@
 .full-width{ width:100%;}
 .color-theme{background-color: #00c896;}
 .color-text-light{color:whitesmoke;}
-.bar {
-    fill: steelblue;
-}
+.padded{padding:16px !important;}
 
-    .bar:hover {
-        fill: brown;
-    }
 
-.axis--x path {
-    display: none;
-}
+.bar {fill: steelblue;}
+.bar:hover {fill: brown;}
+.axis--x path { display: none;}
