@@ -14,17 +14,17 @@
     </header>
 
     <nav class="padded">
-        <form ng-submit="getAll()">
+        <form ng-submit="submit()">
 
             <label>Select Time</label>
             <input type="month" name="month" ng-model="selectedDate" value="" ng-change="updateRadios()" />
           
             <label>Filter By: </label>
-            <input type="radio" name="filter" ng-model="filter" value="{{dateToYearAndMonth}}" /><label>{{dateToMonth}} of {{dateToYear}}</label>
+            <input type="radio" name="filter" ng-model="filter" value="yearAndMonth" /><label>{{dateToMonthName}} of {{dateToYear}}</label>
 
-            <input type="radio" name="filter" ng-model="filter" value="{{dateToYear}}" /><label>Year {{dateToYear}} only</label>
+            <input type="radio" name="filter" ng-model="filter" value="year" /><label>Year {{dateToYear}} only</label>
 
-            <input type="radio" name="filter" ng-model="filter" value="" /><label>All {{dateToMonth}} monthes</label>
+            <input type="radio" name="filter" ng-model="filter" value="month" /><label>All {{dateToMonthName}} monthes</label>
 
             <button type="submit" id="submit" value="Submit">Filter</button>
         </form>

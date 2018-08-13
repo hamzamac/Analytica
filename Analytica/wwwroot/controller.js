@@ -3,7 +3,9 @@ app.controller('analyticaCtrl', function ($scope, $http) {
 
     $scope.selectedDate;
     $scope.data;
-    $scope.finter;
+    $scope.filter;
+
+    $scope.dateToMonthName = "MM";
 
     $scope.dateToMonth = "MM";
 
@@ -14,8 +16,8 @@ app.controller('analyticaCtrl', function ($scope, $http) {
     $scope.updateRadios = function () {
         let d = new Date($scope.selectedDate);
         $scope.dateToYear = d.getFullYear();
-        $scope.dateToMonth = $scope.getMonthName(d.getMonth()+1);
-        $scope.dateToYearAndMonth = d.getFullYear() + '-' + d.getMonth();
+        $scope.dateToMonth = d.getMonth() + 1;
+        $scope.dateToMonthName = $scope.getMonthName(d.getMonth() + 1);
     }
 
     $scope.drawChart = function (data, targetId) {
@@ -29,20 +31,41 @@ app.controller('analyticaCtrl', function ($scope, $http) {
         });
     }
 
-    $scope.getByYear = function () { }
+    $scope.getByYear = function (year) {
+        $http.get("api/words/year/" + year).then(function (response) {
+            $scope.data = response.data;
+            drwaBarChart($scope.data, "svg1");
+        });
+    }
 
-    $scope.geGetByMonth = function () { }
+    $scope.geGetByMonth = function (month) {
+        $http.get("api/words/month/" + month).then(function (response) {
+            $scope.data = response.data;
+            drwaBarChart($scope.data, "svg1");
+        });
+    }
 
-    $scope.getByMonthInAYear = function () { }
+    $scope.getByMonthInAYear = function (year,month) {
+        $http.get("api/words/year/" + year + "/month/" + month).then(function (response) {
+            $scope.data = response.data;
+            drwaBarChart($scope.data, "svg1");
+        });
+    }
 
-    $scope.search = function () {
+    $scope.submit = function () {
+        
         switch($scope.filter){
             case "year":
+                $scope.getByYear($scope.dateToYear);
             break;
             case "month":
+                $scope.geGetByMonth($scope.dateToMonth);
+                break;
+            case "yearAndMonth":
+                $scope.getByMonthInAYear($scope.dateToYear, $scope.dateToMonth)
                 break;
             default:
-                ;
+                $scope.getAll();
         }
     }
 
@@ -78,7 +101,6 @@ app.controller('analyticaCtrl', function ($scope, $http) {
     }
 
     //startup calls
-    $scope.updateRadios();
     $scope.getAll();
 
 });

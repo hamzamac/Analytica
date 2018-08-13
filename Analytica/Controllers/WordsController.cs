@@ -55,7 +55,7 @@ namespace Analytica.Controllers
             var wc = text.SplitText().WordCount()
                 .OrderByDescending(w => w.Value).Select(w => new WordStats() { Word = w.Key, Frequency = w.Value }).ToList();
 
-            return wc.GetRange(0, 30);
+            return wc.GetRange(0, RangeCeiling(wc.Count));
         }
 
 
@@ -77,7 +77,7 @@ namespace Analytica.Controllers
                 .Select(w => new WordStats() { Word = w.Key, Frequency = w.Value })
                 .ToList();
 
-            return wc.GetRange(0, 30);
+            return wc.GetRange(0, RangeCeiling(wc.Count));
         }
 
         [HttpGet("month/{month:int:range(1,12)}")]
@@ -98,7 +98,7 @@ namespace Analytica.Controllers
                 .Select(w => new WordStats() { Word = w.Key, Frequency = w.Value })
                 .ToList();
 
-            return wc.GetRange(0, 30);
+            return wc.GetRange(0, RangeCeiling(wc.Count));
         }
 
         [HttpGet("year/{year:int:length(4)}/month/{month:int:range(1,12)}")]
@@ -120,7 +120,25 @@ namespace Analytica.Controllers
                 .Select(w => new WordStats() { Word = w.Key, Frequency = w.Value })
                 .ToList();
 
-            return wc.GetRange(0, 30);
+            return wc.GetRange(0, RangeCeiling(wc.Count));
+        }
+
+        private void Predicate() { }
+
+        private int RangeCeiling(int count)
+        {
+            if(count == 0)
+            {
+                return 0;
+            }else if(count < 31)
+            {
+                return count;
+            }
+            else
+            {
+                return 30;
+            }
+
         }
       
     }
