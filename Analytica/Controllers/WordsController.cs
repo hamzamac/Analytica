@@ -125,18 +125,18 @@ namespace Analytica.Controllers
 
         private void Predicate() { }
 
-        private int RangeCeiling(int count)
+        private int RangeCeiling(int count, int n = 20)
         {
             if(count == 0)
             {
                 return 0;
-            }else if(count < 31)
+            }else if(count < (n + 1))
             {
                 return count;
             }
             else
             {
-                return 30;
+                return n;
             }
 
         }
